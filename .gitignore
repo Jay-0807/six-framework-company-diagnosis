@@ -1,0 +1,20 @@
+# OS / editor junk
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+
+# Defense in depth：使用者本地数据正常路径在 ~/.company-diagnosis/，
+# 不会出现在本 repo 目录下。但万一有人手抖移动 / symlink，下面这些
+# 规则兜底，绝对禁止使用者业务数据被误传到 GitHub。
+**/user-profile.md
+**/user-profile.history/
+**/memory/
+**/session-cache/
+**/source-allowlist.local.md
+
+# 例外：repo 自带的虚构示例 profile 必须保留进 git
+!examples/example-user-profile.md
