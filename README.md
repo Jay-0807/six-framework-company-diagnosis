@@ -1,6 +1,6 @@
-# six-framework-company-diagnosis
+# six-framework-company-diagnosis(Firefly · 六框架企业战略诊断)
 
-**一个通用的咨询级公司战略诊断 Claude Code skill** —— PEST → 五力 → 7S → VRIO → 价值链 → SWOT，6 个框架严格顺序串联，每次调研都锚定到**使用者自己的商业路径**。
+**一个通用的咨询级公司战略诊断 skill** —— PEST → 五力 → 7S → VRIO → 价值链 → SWOT,6 个框架严格顺序串联,每次调研都锚定到**使用者自己的商业路径**。
 
 > ⚠️ 这个 repo 不存任何使用者业务数据。每个使用者的商业路径规划、历史调研、自定义信源白名单都在 **使用者本地** `~/.company-diagnosis/`，永不上 GitHub。
 
@@ -21,23 +21,60 @@ LLM 直接跑 6 框架分析时的 7 类天然失败模式（实测见 [baseline
 ## 安装
 
 ```bash
-# 克隆到你的 skill 目录
-cd ~/.claude/skills/        # 或者你的 hermes agent 的 skill 目录
-git clone https://github.com/<author>/six-framework-company-diagnosis.git
+# 克隆到你的 agent 的 skill 目录
+cd <你的 agent 的 skill 目录>
+git clone https://github.com/Jay-0807/six-framework-company-diagnosis.git
 ```
 
 首次调用时，skill 会发现 `~/.company-diagnosis/user-profile.md` 不存在，自动进入 onboarding 流程引导你填写自己的商业路径规划。
 
 ## 路径约定
 
-| 路径 | 内容 | 进 GitHub？ |
+`USER_DATA_PATH = ~/.company-diagnosis/`,跨平台路径如下:
+
+| 平台 | 实际路径 |
+|---|---|
+| Linux / macOS / WSL | `~/.company-diagnosis/` |
+| Windows(原生 PowerShell / cmd) | `C:\Users\<用户名>\.company-diagnosis\` |
+
+| 路径 | 内容 | 进 GitHub? |
 |---|---|:-:|
-| 本 repo | skill 本体（铁律、模板、规范、虚构示例） | ✅ 公开 |
-| `~/.company-diagnosis/user-profile.md` | 你的商业路径规划（活文档） | ❌ |
-| `~/.company-diagnosis/user-profile.history/` | 商业路径历史版本 | ❌ |
-| `~/.company-diagnosis/memory/` | 你的历史调研归档 + 4 维 tag 索引 | ❌ |
-| `~/.company-diagnosis/source-allowlist.local.md` | 你自定义的信源白名单（含中文媒体） | ❌ |
-| `~/.company-diagnosis/session-cache/` | 短期会话缓存（可选） | ❌ |
+| 本 repo | skill 本体(铁律、模板、规范、虚构示例) | ✅ 公开 |
+| `USER_DATA_PATH/user-profile.md` | 你的商业路径规划(活文档) | ❌ |
+| `USER_DATA_PATH/user-profile.history/` | 商业路径历史版本 | ❌ |
+| `USER_DATA_PATH/memory/<公司>-<日期>.md` | 调研归档(Markdown 源) | ❌ |
+| `USER_DATA_PATH/memory/<公司>-<日期>.pdf` | 调研归档(可视化 PDF,**v3 强制双份**) | ❌ |
+| `USER_DATA_PATH/memory/_index.md` | 4 维 tag 跨公司索引 | ❌ |
+| `USER_DATA_PATH/source-allowlist.local.md` | 自定义信源白名单(含中文媒体) | ❌ |
+| `USER_DATA_PATH/session-cache/` | 短期会话缓存(可选) | ❌ |
+
+## 导出 PDF(v3 必备)
+
+铁律 11 要求每份诊断报告同时归档 `.md` + `.pdf`,因为六框架本身高度可视化(7×7 矩阵 / VRIO 决策树 / Porter 价值链 / SWOT 2×2)。
+
+### Windows
+
+```powershell
+# 一键转换
+powershell.exe -ExecutionPolicy Bypass `
+  -File tools\md2pdf.ps1 `
+  -InputFile  ~\.company-diagnosis\memory\<公司>-<日期>.md `
+  -OutputFile ~\.company-diagnosis\memory\<公司>-<日期>.pdf `
+  -Title "<公司> 六框架诊断"
+```
+
+依赖:Chrome 或 Edge(标准位置即可)。首次运行会下载 mermaid.min.js 到 `tools/`(3.3MB,之后离线可用)。
+
+### macOS / Linux / WSL
+
+```bash
+chmod +x tools/md2pdf.sh
+./tools/md2pdf.sh ~/.company-diagnosis/memory/<公司>-<日期>.md \
+                  ~/.company-diagnosis/memory/<公司>-<日期>.pdf \
+                  "<公司> 六框架诊断"
+```
+
+依赖任一:`pandoc + weasyprint`(推荐) / `pandoc + wkhtmltopdf` / `pandoc + Chrome`(自动 fallback)。详见 [tools/README.md](tools/README.md)。
 
 ## 推荐 MCP（可选但显著提升质量）
 
@@ -58,32 +95,36 @@ git clone https://github.com/<author>/six-framework-company-diagnosis.git
 ## 用法
 
 ```
-你：用六框架分析 钉钉
+你:用六框架分析 钉钉
 
-Claude：
+Firefly:
   → 读 ~/.company-diagnosis/user-profile.md
-  → 提取「钉钉」的 4 维 tag（SaaS-协同 / 大厂事业部 / 双轮 / 大企业+SMB+政企）
+  → 提取「钉钉」的 4 维 tag(SaaS-协同 / 大厂事业部 / 双轮 / 大企业+SMB+政企)
   → 查 _index.md 找相似历史调研
   → 按 source-policy.md 决定信源
-  → 执行 6 框架（铁律 1-7）
-  → 第七节"对使用者商业路径的启示"（铁律 8）
-  → 归档到 memory/钉钉-2026-05-12.md
-  → 询问：要根据本次发现更新 user-profile.md 吗？
+  → 执行 6 框架(铁律 1-7)
+  → 序章 + 每节框架解释 + 标准可视化(铁律 9-11)
+  → 第七节"对使用者商业路径的启示"(铁律 8)
+  → 缩写首处展开 + 末尾附录 G 术语表(铁律 12)
+  → 归档到 memory/钉钉-2026-05-12.md + .pdf(铁律 11 双份)
+  → 询问:要根据本次发现更新 user-profile.md 吗?
 ```
 
 ## 文件清单
 
 | 文件 | 作用 |
 |---|---|
-| [SKILL.md](SKILL.md) | 主入口（流程总指挥） |
-| [framework-checklists.md](framework-checklists.md) | 每框架检查清单 + 评分锚点 |
-| [output-template.md](output-template.md) | 报告模板（7 节 + 附录） |
-| [onboarding-guide.md](onboarding-guide.md) | 首次调用引导 |
+| [SKILL.md](SKILL.md) | 主入口(流程总指挥) |
+| [framework-checklists.md](framework-checklists.md) | 每框架检查清单 + 评分锚点 + 读法说明 |
+| [output-template.md](output-template.md) | 报告模板(序章 + 7 节 + 附录) |
+| [visualization-templates.md](visualization-templates.md) | 每个框架的 Mermaid 标准模板(v3 新增) |
+| [onboarding-guide.md](onboarding-guide.md) | 首次调用引导(v3 改造:行业自适应) |
 | [user-profile-template.md](user-profile-template.md) | 商业路径规划模板 |
-| [memory-spec.md](memory-spec.md) | 长短期记忆系统规范 |
-| [source-policy.md](source-policy.md) | 信源治理（白 / 黑名单） |
+| [memory-spec.md](memory-spec.md) | 长短期记忆系统规范(v3:md + pdf 双份) |
+| [source-policy.md](source-policy.md) | 信源治理(白 / 黑名单) |
 | [source-skills-registry.md](source-skills-registry.md) | 可对接 MCP 清单 |
 | [baseline-test-results.md](baseline-test-results.md) | 7 类失败模式实测记录 |
+| [tools/](tools/) | MD→PDF 转换脚本(Windows + macOS/Linux,v3 新增) |
 | [examples/example-user-profile.md](examples/example-user-profile.md) | 虚构使用者「云栖咨询」示例 |
 
 ## License

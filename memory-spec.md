@@ -7,13 +7,21 @@
 | **短期** | `~/.company-diagnosis/session-cache/current.md` | 本次会话临时上下文（当前公司、临时偏好、未完成节段） | 会话结束清空 |
 | **长期** | `~/.company-diagnosis/memory/<公司>-YYYY-MM-DD.md` + `_index.md` | 完整调研归档 + 4 维 tag 索引 | 永久 |
 
-## 长期记忆：单次调研归档
+## 长期记忆:单次调研归档(v3 改造:md + pdf 双份)
 
-**路径**：`~/.company-diagnosis/memory/<公司中文名>-YYYY-MM-DD.md`
+**路径**:
+- Markdown 源:`~/.company-diagnosis/memory/<公司中文名>-YYYY-MM-DD.md`
+- **PDF 可视化版**:`~/.company-diagnosis/memory/<公司中文名>-YYYY-MM-DD.pdf`(v3 强制,铁律 11)
 
-**内容**：六框架诊断报告全文（按 [output-template.md](output-template.md) 输出）+ 第七节"对使用者商业路径的启示" + 附录。直接保存生成的完整报告，**不做摘要也不做压缩**——原始素材最值钱。
+**为什么要双份**:
+- `.md`:LLM 直接写、可继续编辑、版本对比方便、跨公司检索靠它
+- `.pdf`:可视化(Mermaid 渲染过的流程图 / 决策树 / 矩阵)+ 适合发给他人 review
 
-**同公司多次调研**：新建文件 `<公司>-<YYYY-MM-DD>.md`（不覆盖旧的），并在 `_index.md` 标 v2 / v3。
+**内容**:六框架诊断报告全文(按 [output-template.md](output-template.md) 输出)+ 序章方法论 + 第七节"对使用者商业路径的启示" + 附录。直接保存生成的完整报告,**不做摘要也不做压缩**——原始素材最值钱。
+
+**生成 PDF**:用 [tools/md2pdf.ps1](tools/md2pdf.ps1)(Windows)或 [tools/md2pdf.sh](tools/md2pdf.sh)(macOS / Linux)。如果 PDF 转换失败,**红旗**,必须修复(铁律 11)。
+
+**同公司多次调研**:新建文件 `<公司>-<YYYY-MM-DD>.md`(不覆盖旧的),并在 `_index.md` 标 v2 / v3。
 
 ## 长期记忆：索引文件 `_index.md`
 
@@ -62,18 +70,22 @@
 | 2/4 | "弱相关"，仅在第七节做对照参考 |
 | 0-1/4 | 不算相关，跳过引用 |
 
-## 归档触发（诊断结束后强制）
+## 归档触发(诊断结束后强制,v3 改造)
 
 1. 把生成的完整报告写入 `memory/<公司>-<YYYY-MM-DD>.md`
-2. 提取 4 维 tag + 不超过 30 字的"关键洞察"
-3. 在 `_index.md` 表里 append 一行
-4. 在最终对话末尾告知使用者：归档位置 + index 已更新
+2. **运行 PDF 转换**:
+   - Windows: `tools\md2pdf.ps1 -InputFile <md> -OutputFile <pdf> -Title "<公司> 六框架诊断"`
+   - macOS / Linux: `tools/md2pdf.sh <md> <pdf> "<公司> 六框架诊断"`
+3. 检查 `<公司>-<YYYY-MM-DD>.pdf` 是否生成成功(铁律 11 自检)
+4. 提取 4 维 tag + 不超过 30 字的"关键洞察"
+5. 在 `_index.md` 表里 append 一行(行内同时给出 md 和 pdf 链接)
+6. 在最终对话末尾告知使用者:归档位置(md + pdf) + index 已更新
 
-**如果归档失败 → 红旗，必须修复**。任何"我没找到这个目录" / "权限被拒"立刻报错，**不要默默跳过**。
+**如果归档失败 → 红旗,必须修复**。任何"我没找到这个目录" / "权限被拒" / "PDF 生成失败"立刻报错,**不要默默跳过**。
 
 ## 短期记忆约定（可选）
 
-`~/.company-diagnosis/session-cache/current.md` —— 跨多轮对话保持上下文（hermes 长会话场景）：
+`~/.company-diagnosis/session-cache/current.md` —— 跨多轮对话保持上下文(长会话场景):
 
 ```markdown
 # 当前会话上下文
