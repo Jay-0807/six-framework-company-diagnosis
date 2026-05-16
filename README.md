@@ -6,7 +6,7 @@
 
 ## 它解决什么
 
-LLM 直接跑 6 框架分析时的 7 类天然失败模式（实测见 [baseline-test-results.md](baseline-test-results.md)）：
+LLM 直接跑 6 框架分析时的 7 类天然失败模式（实测见 [baseline-test-results.md](docs/baseline-test-results.md)）：
 
 - 框架孤岛输出，SWOT 不引用前面发现
 - VRIO 退化成"高 / 中 / 低"打分（丢失 V→R→I→O 顺序判定）
@@ -88,7 +88,7 @@ chmod +x tools/md2pdf.sh
 | [Guidepoint](https://www.guidepoint.com/) | 10万+ 专家访谈转录 | 企业级 |
 | [FactSet](https://www.factset.com/marketplace) | 机构级市场数据 + 分析师一致预期 | 企业级 |
 
-完整清单 + 装机指引：[source-skills-registry.md](source-skills-registry.md)
+完整清单 + 装机指引：[source-skills-registry.md](docs/source-skills-registry.md)
 
 **中国市场提醒**：MCP 生态对中文一手源（财新 / 36kr / 雪球 / 天眼查 / 工信部 / CNIPA / 同花顺）目前**无可用 MCP**。变通方案：靠 WebSearch + Brave Search + 使用者本地维护的中文信源白名单。
 
@@ -101,7 +101,7 @@ Firefly:
   → 读 ~/.company-diagnosis/user-profile.md
   → 提取「钉钉」的 4 维 tag(SaaS-协同 / 大厂事业部 / 双轮 / 大企业+SMB+政企)
   → 查 _index.md 找相似历史调研
-  → 按 source-policy.md 决定信源
+  → 按 docs/source-policy.md 决定信源
   → 执行 6 框架(铁律 1-7)
   → 序章 + 每节框架解释 + 标准可视化(铁律 9-11)
   → 第七节"对使用者商业路径的启示"(铁律 8)
@@ -115,15 +115,15 @@ Firefly:
 | 文件 | 作用 |
 |---|---|
 | [SKILL.md](SKILL.md) | 主入口(流程总指挥) |
-| [framework-checklists.md](framework-checklists.md) | 每框架检查清单 + 评分锚点 + 读法说明 |
-| [output-template.md](output-template.md) | 报告模板(序章 + 7 节 + 附录) |
-| [visualization-templates.md](visualization-templates.md) | 每个框架的 Mermaid 标准模板(v3 新增) |
-| [onboarding-guide.md](onboarding-guide.md) | 首次调用引导(v3 改造:行业自适应) |
-| [user-profile-template.md](user-profile-template.md) | 商业路径规划模板 |
-| [memory-spec.md](memory-spec.md) | 长短期记忆系统规范(v3:md + pdf 双份) |
-| [source-policy.md](source-policy.md) | 信源治理(白 / 黑名单) |
-| [source-skills-registry.md](source-skills-registry.md) | 可对接 MCP 清单 |
-| [baseline-test-results.md](baseline-test-results.md) | 7 类失败模式实测记录 |
+| [frameworks.md](docs/frameworks.md) | 每框架检查清单 + 评分锚点 + 读法说明 |
+| [output-template.md](docs/output-template.md) | 报告模板(序章 + 7 节 + 附录) |
+| [visualization-templates.md](docs/visualization-templates.md) | 每个框架的 Mermaid 标准模板(v3 新增) |
+| [onboarding-guide.md](docs/onboarding-guide.md) | 首次调用引导(v3 改造:行业自适应) |
+| [user-profile-template.md](docs/user-profile-template.md) | 商业路径规划模板 |
+| [memory-spec.md](docs/memory-spec.md) | 长短期记忆系统规范(v3:md + pdf 双份) |
+| [source-policy.md](docs/source-policy.md) | 信源治理(白 / 黑名单) |
+| [source-skills-registry.md](docs/source-skills-registry.md) | 可对接 MCP 清单 |
+| [baseline-test-results.md](docs/baseline-test-results.md) | 7 类失败模式实测记录 |
 | [tools/](tools/) | MD→PDF 转换脚本(Windows + macOS/Linux,v3 新增) |
 | [examples/example-user-profile.md](examples/example-user-profile.md) | 虚构使用者「云栖咨询」示例 |
 
