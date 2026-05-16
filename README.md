@@ -1,4 +1,4 @@
-# six-framework-company-diagnosis(Firefly · 六框架企业战略诊断)
+# firefly-six-framework-company-diagnosis(Firefly · 六框架企业战略诊断)
 
 **一个通用的咨询级公司战略诊断 skill** —— PEST → 五力 → 7S → VRIO → 价值链 → SWOT,6 个框架严格顺序串联,每次调研都锚定到**使用者自己的商业路径**。
 
@@ -23,7 +23,7 @@ LLM 直接跑 6 框架分析时的 7 类天然失败模式（实测见 [baseline
 ```bash
 # 克隆到你的 agent 的 skill 目录
 cd <你的 agent 的 skill 目录>
-git clone https://github.com/Jay-0807/six-framework-company-diagnosis.git
+git clone https://github.com/Jay-0807/firefly-six-framework-company-diagnosis.git
 ```
 
 首次调用时，skill 会发现 `~/.company-diagnosis/user-profile.md` 不存在，自动进入 onboarding 流程引导你填写自己的商业路径规划。

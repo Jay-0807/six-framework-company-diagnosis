@@ -1,5 +1,5 @@
 ---
-name: six-framework-company-diagnosis
+name: firefly-six-framework-company-diagnosis
 description: Use when running a full consulting-style strategic diagnostic on a company — PEST→Five Forces→McKinsey 7S→VRIO→Value Chain→SWOT in strict order, anchored to the user's own business path. Triggers include "六框架分析公司", "战略诊断", "PEST 五力 SWOT 全套", "consulting diagnostic on company", "麦肯锡式企业分析", "全套企业诊断".
 ---
 
