@@ -15,7 +15,7 @@ description: Use when running a full consulting-style strategic diagnostic on a 
 - 跨公司调研有长期记忆：分析新公司前先按 4 维 tag（行业 / 规模 / 商业模式 / 目标客户）查相似历史调研
 - 信源治理：[公开数据] / [行业共识] / [需验证] / [推断] 强制标签 + 黑名单兜底
 
-## 12 条铁律
+## 13 条铁律
 
 继承 baseline 测试发现的 LLM 7 类失败模式（详见 docs/baseline-test-results.md）：
 
@@ -45,6 +45,14 @@ description: Use when running a full consulting-style strategic diagnostic on a 
     - 第七节 → mindmap（不确定性回答）+ gantt（行动路线图）
 
 12. **缩写必须自解释**：① 报告首次出现关键缩写时,在该处用括号或注释展开(如 `PEST(Political 政治 / Economic 经济 / Social 社会 / Technological 技术)`)。② 报告末尾必须有**附录 G「术语 & 缩写表」**,按字母顺序索引全部缩写,中文意思 + 英文全称。否则非战略背景的读者(团队 / 合伙人 / 投资人)看不懂。
+
+13. **Workspace 不留痕,所有输出都归档到 `USER_DATA_PATH/memory/`**:
+    - ✅ 报告 markdown / PDF / mermaid 图 / 截图 / 临时 HTML —— **全部**走 `~/.company-diagnosis/memory/`,**绝对不**留在使用者当前工作目录
+    - ✅ 中间产物(mermaid.min.js 缓存、debug 截图、HTML 中转文件)—— 用完即删,或者放进 `~/.company-diagnosis/.cache/` 然后任务结束清空
+    - ❌ 不允许往 `<工作目录>/anta-report.pdf`、`<工作目录>/verify-*.png` 之类的路径写文件
+    - ❌ 不允许在 skill 仓库自己的目录(`.claude/skills/<skill-name>/`)里写报告产物
+    - **理由**:使用者要随时拿干净的工作目录跑别的事;skill 产物乱堆是糟糕的产品体验。归档系统(`memory/_index.md`)就是为了组织所有调研产物。
+    - **任务结束自检**:`ls <工作目录>/*.md *.pdf *.png *.html` 应该没有本次诊断产生的文件。
 
 ## 调用流程（v2）
 
@@ -80,11 +88,13 @@ Step 5：第七节"对使用者商业路径的启示"（铁律 8）
   ├─ 7.4 user-profile 更新建议：具体到字段级
   └─ 7.5 战略路线图 mindmap + gantt（铁律 11）
   ↓
-Step 6：归档（双份）
-  ├─ Markdown：~/.company-diagnosis/memory/<公司>-<YYYY-MM-DD>.md
-  ├─ PDF：~/.company-diagnosis/memory/<公司>-<YYYY-MM-DD>.pdf（用 tools/md2html.ps1 / md2pdf.sh 转）
-  ├─ 在 _index.md 追加一行（含 4 维 tag + 30 字关键洞察）
-  └─ 询问使用者：是否要根据本次发现更新 user-profile.md？
+Step 6:归档(双份)+ 工作目录清扫
+  ├─ Markdown:~/.company-diagnosis/memory/<公司>-<YYYY-MM-DD>.md
+  ├─ PDF:~/.company-diagnosis/memory/<公司>-<YYYY-MM-DD>.pdf(用 tools/md2pdf.ps1 / md2pdf.sh 转)
+  ├─ 在 _index.md 追加一行(含 4 维 tag + 30 字关键洞察 + 双份链接)
+  ├─ **删除所有中间产物**(临时 HTML / verify 截图 / debug 文件)——铁律 13
+  ├─ **自检**:`ls <CWD>/*.{md,pdf,png,html}` 应该不含本次诊断产物
+  └─ 询问使用者:是否要根据本次发现更新 user-profile.md?
 ```
 
 ## 文件导航
@@ -120,12 +130,13 @@ Step 6：归档（双份）
 - 没查 `_index.md` 就开始诊断 → 退回查
 - 调研结束没归档到 `memory/` + 没更新 `_index.md` → 补归档
 
-**新增 5 项**(v3):
+**新增 6 项**(v3):
 - 报告缺序章"为什么用这六个框架" → **补**(铁律 9)
 - 任一节缺"框架解释" → **补**(铁律 10)
 - 任一节缺对应的标准可视化(Mermaid / Heatmap / 决策树)→ **补**(铁律 11;见 docs/visualization-templates.md)
-- 归档只有 `.md` 没有 `.pdf` → 用 tools/md2html.ps1 或 tools/md2pdf.sh 补出 PDF
+- 归档只有 `.md` 没有 `.pdf` → 用 tools/md2pdf.ps1 或 tools/md2pdf.sh 补出 PDF
 - 报告出现缩写未在首处展开 / 缺附录 G 术语表 → **补**(铁律 12)
+- **任务结束后工作目录出现本次诊断的 md/pdf/png/html 文件** → **必须清理或移到 memory/**(铁律 13)
 
 ## 路径配置
 

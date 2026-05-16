@@ -1,5 +1,12 @@
 # Changelog
 
+## v3.2 (2026-05-16) — Workspace 卫生 + 仓库重命名
+
+- **新增铁律 13**:Workspace 不留痕——所有报告产物(md / pdf / 截图 / 中间 HTML)强制归档到 `~/.company-diagnosis/memory/`,**任何**临时文件不允许留在使用者当前工作目录或 skill 仓库目录
+- 流程 Step 6 加显式"工作目录清扫"步骤 + 自检
+- 红旗清单新增:"任务结束工作目录还有本次诊断产物" = 必须清理
+- 仓库重命名 `six-framework-company-diagnosis` → `firefly-six-framework-company-diagnosis`(README / SKILL.md `name:` 字段 / LICENSE 同步)
+
 ## v3.1 (2026-05-16) — 目录结构整理
 
 - 9 个规范文档全部从根目录移到 `docs/` 子目录,根目录从 13 文件压到 4 文件
