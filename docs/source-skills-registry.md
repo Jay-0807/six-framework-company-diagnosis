@@ -69,7 +69,6 @@ MCP 生态对中文一手源覆盖**很差**。下表的源**都没有可用 MCP
 | PulseMCP | https://www.pulsemcp.com/servers | 发现 + use-case playbook |
 | LobeHub Skills | https://lobehub.com/skills | 联邦 skill 市场 |
 | ClawHub | https://clawhub.ai | Skill marketplace |
-| claudeskills.club | https://claudeskills.club | 分类 Skill 索引 |
 
 ## 装机检查（skill 初始化时跑）
 
