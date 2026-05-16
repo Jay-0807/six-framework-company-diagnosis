@@ -126,6 +126,7 @@ Firefly:
 | [baseline-test-results.md](docs/baseline-test-results.md) | 7 类失败模式实测记录 |
 | [tools/](tools/) | MD→PDF 转换脚本(Windows + macOS/Linux,v3 新增) |
 | [examples/example-user-profile.md](examples/example-user-profile.md) | 虚构使用者「云栖咨询」示例 |
+| [CHANGELOG.md](CHANGELOG.md) | 版本演进记录(v1 → v3.1) |
 
 ## License
 
